@@ -1,0 +1,47 @@
+<!--
+  Generated template for the ResumenCuentaPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+<ion-navbar >
+    <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Appachas</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="refresh()">
+            <ion-icon name="refresh"></ion-icon>
+        </button>
+        <button ion-button (click)="openSettings()">
+            <ion-icon name="more"></ion-icon>
+        </button>
+    </ion-buttons>
+</ion-navbar>
+</ion-header>
+<ion-content padding class="resumen-cuenta" style="overflow-y=scroll">
+    
+    <ion-card  *ngIf="cuenta" class="rounded-corners" [attr.id]="cuenta.cuentaId" >
+    <!-- <ion-card  *ngIf="cuenta" class="rounded-corners" [ngClass]="{'slide-in': cuentaActual == cuenta.cuentaId}"  [attr.id]="cuenta.cuentaId" >-->
+    <!-- version para cuentas multiples -->
+    <!-- <ion-card  *ngIf="cuenta" [ngClass]="{'slide-in': cuentaActual == cuenta.nombre}" *ngFor="let cuenta of cuentas" (click)="verCuenta(cuenta.nombre)" [attr.id]="cuenta.nombre" > -->
+
+        <ion-card-header class="card-header" (click)="verCuenta(cuenta.cuentaId)">
+            {{cuenta.nombre}}
+        </ion-card-header>
+        <ion-card-content>
+            <ion-list    no-lines *ngIf="balances" >
+            <p style="font-style:italic; margin-bottom:16px">{{cuenta.desc}} </p>
+               <ion-item  id="cuenta-item" *ngFor="let participante of balances" >
+                        {{participante.nombre}}
+                        <ion-badge item-right [class.danger-class]="participante.balanceTotal < 0">{{participante.balanceTotal | number:'1.2-2'}} €</ion-badge>     
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-icon name="home" *ngIf="!cuenta" class="background-icon" ></ion-icon>
+
+
+</ion-content>

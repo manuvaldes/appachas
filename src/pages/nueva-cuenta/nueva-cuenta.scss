@@ -1,0 +1,31 @@
+nueva-cuenta {
+
+  p {
+    margin: 20px 0;
+    line-height: 22px;
+    font-size: 16px;
+  }
+
+
+ 
+ @-webkit-keyframes slideInSmooth {
+   0% {
+     -webkit-transform: translate3d(-100%,0,0);
+   }
+   100% {
+     -webkit-transform: translate3d(0,0,0);
+   }
+ }
+
+
+ .slide-in{
+    -webkit-animation: slideInSmooth ease-in 1; 
+   animation: slideInSmooth ease-in 1;
+   -webkit-animation-fill-mode: forwards;
+   animation-fill-mode: forwards;
+   -webkit-animation-duration: 500ms;
+   animation-duration: 500ms;
+ }
+
+
+}

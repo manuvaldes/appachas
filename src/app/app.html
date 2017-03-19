@@ -1,0 +1,38 @@
+<ion-menu [content]="content">
+    <ion-toolbar>
+        <ion-title>Appachas</ion-title>
+    </ion-toolbar>
+    <ion-content>
+        <ion-list stable *ngIf="cuentasService" no-lines>
+            <ion-item *ngIf="gapiService.email">
+                <ion-avatar item-left>
+                    <img [src]="gapiService.avatar">
+                </ion-avatar>
+                <b>{{gapiService.email}}</b>
+                <p>Logged in via Google</p>
+            </ion-item>
+            <ion-item *ngIf="!gapiService.email && cuentasService.usuarioLocal">
+                <b>{{cuentasService.usuarioLocal.email}}</b>
+                <p>desconectado</p>
+            </ion-item>
+            <button ion-button *ngIf="!gapiService.email" class="google-sign-in" block (click)="googleSignIn()">
+                <ion-icon name="logo-google"></ion-icon>Sign in con Google
+            </button>
+            <ion-item-divider color="primary" >Mis Cuentas</ion-item-divider>
+            <div *ngFor="let p of cuentasService.cuentas" (click)="openPage('ListaGastosPage',p.cuentaId)">
+                <button ion-item style="background-color: rgba(0,0,0,0) ! important" *ngIf="!p.deleteMark"> 
+                {{p.nombre}}
+                    <ion-icon style="position:absolute; right:0; margin-right:16px" *ngIf="!p.savedCloud" name="cloud-outline">
+                    </ion-icon>
+                    <ion-icon style="position:absolute; right:0; margin-right:16px" *ngIf="p.savedCloud" name="cloud-done"></ion-icon>
+                </button >
+            </div>
+            <button ion-item style="background-color: rgba(0,0,0,0) ! important" *ngIf="gapiService.email" class=" " (click)="gapiService.googleLogout()">Logout</button>
+            <button ion-item style="background-color: rgba(0,0,0,0) ! important" class=" " (click)="testGapi()">Probar Api Google</button>
+        </ion-list>
+    </ion-content>
+    <button ion-button fab fab-bottom fab-right (click)="openPage('NuevaCuentaPage','')" style=" z-index: 100 !important">
+        <ion-icon name="add"></ion-icon>
+    </button>
+</ion-menu>
+<ion-nav id="nav" [root]="rootPage" #content swipe-back-enabled="false"></ion-nav>

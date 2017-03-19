@@ -1,0 +1,41 @@
+<!--
+  Generated template for the ListaGastosPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title *ngIf="cuentaBean">{{cuentaBean.nombre}}</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="openSettings()">
+                <ion-icon name="more"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content no-padding class="lista-gastos" *ngIf="cuentaBean">
+    <ion-list-header>{{cuentaBean.desc}}</ion-list-header>
+    <!-- teniamos este *ngIf="gasto"  en el card para evitar que saliera el proto en el array, pero ya no debe salir -->
+    <!-- despues de cambios (desconocidos) en el modelo de datos que gestionan bien el array de objetos -->
+    <div *ngFor="let gasto of gastos | orderBy: ['-fecha'] " (click)="editarGasto(gasto)">
+        <ion-card *ngIf="!gasto.deleteMark">
+            <ion-card-content no-padding>
+                <ion-item>
+                    <ion-label no-margin>{{gasto.nombre}}
+                        <p>
+                            <ion-badge no-margin stable-alt item-left>{{gasto.pagador}}</ion-badge>el {{gasto.fecha | toDate }}
+                        </p>
+                    </ion-label>
+                    <ion-badge item-right> {{ (gasto.cantidad - 0) | number:'1.2-2'}} €</ion-badge>
+                </ion-item>
+            </ion-card-content>
+        </ion-card>
+    </div>
+</ion-content>
+<button ion-button fab fab-bottom fab-right (click)="nuevoGasto()" style=" z-index: 100 !important">
+    <ion-icon name="add"></ion-icon>
+</button>

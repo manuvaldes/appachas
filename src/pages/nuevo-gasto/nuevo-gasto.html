@@ -1,0 +1,46 @@
+<!--
+  Generated template for the NuevoGastoPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+<ion-navbar >
+    <ion-title *ngIf="cuentaBean">{{nuevo ? "Añadir Gasto a " + cuentaBean.nombre : "Modificar Gasto"}}</ion-title>
+</ion-navbar>
+</ion-header>
+<ion-content padding class="nuevo-gasto">
+    
+        <ion-list>
+            <ion-item>
+                <ion-input #formulario placeholder="Descripción" type="text" [(ngModel)]="gastoBean.nombre">Nombre</ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-input placeholder="Cantidad" type="number" step="0.01" [(ngModel)]="gastoBean.cantidad">Cantidad</ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-input placeholder="Fecha" type="date" [(ngModel)]="gastoBean.fecha">Fecha</ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Pagado por:</ion-label>
+                <ion-select [(ngModel)]="gastoBean.pagador" *ngIf="cuentaBean" multiple="false">
+                    <ion-option *ngFor="let participante of cuentaBean.participantes" value="{{participante.nombre}}" selected="false">{{participante.nombre}}</ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+            <!-- el ngIf tiene que ir a un nivel superior al ngFor donde consultamos cuentaBean -->
+            <ion-list-header>Participantes</ion-list-header>
+            <ion-item *ngFor="let receptor of gastoBean.receptores">
+                <ion-checkbox checked="true" [(ngModel)]="receptor.receptor"></ion-checkbox>
+                <ion-label>{{receptor.nombre}}</ion-label>
+            </ion-item>
+        </ion-list>
+     
+    <ion-row padding>
+        <button ion-button block (click)="crearGasto(formulario)">{{nuevo ? "Crear Gasto" : "Guardar Gasto"}}</button>
+    </ion-row>
+    <ion-row padding>
+        <button ion-button block color="danger" *ngIf="!nuevo" (click)="borrarGasto()">Borrar Gasto</button>
+    </ion-row>
+</ion-content>
